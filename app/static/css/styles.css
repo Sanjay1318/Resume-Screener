@@ -1,70 +1,66 @@
-/* Custom scrollbar for a polished look */
-::-webkit-scrollbar {
-    width: 8px;
+/* Import Premium Font */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Outfit', sans-serif;
+    /* Ensure no horizontal scroll from background blobs */
+    overflow-x: hidden; 
 }
 
-::-webkit-scrollbar-track {
-    background: #f1f5f9;
+/* 1. Page Load Transition */
+.page-transition {
+    animation: slideFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
-}
-
-/* Simple fade-in animation for HTMX transitions */
-.fade-in {
-    animation: fadeIn 0.3s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* ------------------------------
-   UI polish (CSS-only)
-   - Keeps existing selectors intact
-   - Adds accessible focus, smoother
-     interactions, and reduced motion
--------------------------------- */
-
-/* Improve selection contrast slightly */
-::selection {
-    background: rgba(20, 241, 217, 0.35);
-    color: #081014;
-}
-
-/* Keyboard focus visibility (won't affect mouse users) */
-:focus-visible {
-    outline: 2px solid rgba(20, 241, 217, 0.9);
-    outline-offset: 2px;
-    border-radius: 8px;
-}
-
-/* Smooth scrolling without changing layout */
-html {
-    scroll-behavior: smooth;
-}
-
-/* Respect reduced motion preferences */
-@media (prefers-reduced-motion: reduce) {
-    html {
-        scroll-behavior: auto;
+@keyframes slideFadeUp {
+    0% { 
+        opacity: 0; 
+        transform: translateY(20px); 
     }
-
-    .fade-in {
-        animation: none !important;
-    }
-
-    *, *::before, *::after {
-        transition-duration: 0.001ms !important;
-        animation-duration: 0.001ms !important;
-        animation-iteration-count: 1 !important;
+    100% { 
+        opacity: 1; 
+        transform: translateY(0); 
     }
 }
 
+/* 2. Ambient Aurora Background */
+.ambient-bg {
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    width: 100vw; 
+    height: 100vh;
+    z-index: -1;
+    background-color: #020617; /* Slate 950 */
+    overflow: hidden;
+}
+
+.ambient-blob {
+    position: absolute;
+    filter: blur(120px);
+    opacity: 0.4;
+    border-radius: 50%;
+    animation: floatBlob 12s infinite alternate ease-in-out;
+}
+
+.blob-1 { 
+    top: -10%; 
+    left: -10%; 
+    width: 50vw; 
+    height: 50vw; 
+    background: #4c1d95; /* Deep Violet */
+}
+
+.blob-2 { 
+    bottom: -20%; 
+    right: -10%; 
+    width: 60vw; 
+    height: 60vw; 
+    background: #0d9488; /* Deep Teal */
+    animation-delay: -6s; 
+}
+
+@keyframes floatBlob {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(30px, 50px) scale(1.1); }
+}

@@ -4,56 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Res Scanner</title>
-    <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        // Custom color palette matching your image
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        cyberbg: '#0B1114',
-                        cybercard: '#121A21',
-                        cyberborder: '#1E2C3A',
-                        cyberteal: '#14F1D9',
-                        cybergray: '#8B9BA8'
-                    }
-                }
-            }
-        }
-    </script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
-<body class="bg-cyberbg min-h-screen text-gray-200 font-sans antialiased selection:bg-cyberteal selection:text-black">
+<body class="text-gray-100 min-h-screen flex flex-col relative">
 
-    <nav class="bg-cybercard border-b border-cyberborder sticky top-0 z-40">
+    <!-- Ambient Animated Background -->
+    <div class="ambient-bg">
+        <div class="ambient-blob blob-1"></div>
+        <div class="ambient-blob blob-2"></div>
+    </div>
+
+    <!-- Frosted Glass Navbar -->
+    <nav class="sticky top-0 z-50 bg-slate-900/40 backdrop-blur-xl border-b border-white/10 shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 
-                <!-- Updated Logo -->
-                <div class="flex-shrink-0 flex items-center space-x-2">
-                    <div class="w-8 h-8 rounded-full bg-cyberteal flex items-center justify-center shadow-[0_0_15px_rgba(20,241,217,0.4)]">
-                        <svg class="w-5 h-5 text-cyberbg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                    </div>
-                    <a href="{{ url_for('main.root') }}" class="text-xl font-bold text-white tracking-wide">
-                        Res<span class="text-cyberteal">Scanner</span>
-                    </a>
-                </div>
-                
-                <!-- Navigation Links -->
+                <!-- Logo with Hover Scale -->
+                <a href="{{ url_for('main.root') }}" class="flex items-center space-x-2 group transition-transform duration-300 hover:scale-105">
+                    <svg class="w-8 h-8 text-teal-400 group-hover:text-teal-300 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-violet-400">
+                        Res Scanner
+                    </span>
+                </a>
+
+                <!-- Navigation Links with Underline Hover -->
                 <div class="flex items-center space-x-6">
                     {% if current_user.is_authenticated %}
-                        <a href="{{ url_for('main.root') }}" class="text-sm font-medium text-cybergray hover:text-white transition-colors">Dashboard</a>
-                        <a href="{{ url_for('main.history') }}" class="text-sm font-medium text-cybergray hover:text-white transition-colors">Analytics</a>
-                        
-                        <!-- Profile Pill -->
-                        <div class="flex items-center space-x-3 bg-cyberbg border border-cyberborder rounded-full py-1 px-4">
-                            <a href="{{ url_for('main.profile') }}" class="text-sm font-medium text-white hover:text-cyberteal transition-colors">{{ current_user.name }}</a>
-                            <span class="text-cyberborder">|</span>
-                            <a href="{{ url_for('auth.logout') }}" class="text-sm font-medium text-cybergray hover:text-red-400 transition-colors">Logout</a>
-                        </div>
+                        <a href="{{ url_for('main.history') }}" class="text-sm font-medium text-gray-300 hover:text-teal-400 transition-colors duration-300">History</a>
+                        <a href="{{ url_for('main.profile') }}" class="text-sm font-medium text-gray-300 hover:text-teal-400 transition-colors duration-300">Profile</a>
+                        <a href="{{ url_for('auth.logout') }}" class="px-4 py-2 text-sm font-medium rounded-full bg-white/5 border border-white/10 hover:bg-red-500/20 hover:text-red-400 hover:border-red-500/50 transition-all duration-300">
+                            Logout
+                        </a>
                     {% else %}
-                        <a href="{{ url_for('auth.login') }}" class="text-sm font-medium text-cybergray hover:text-white transition-colors">Log In</a>
-                        <a href="{{ url_for('auth.register') }}" class="text-sm font-medium bg-cyberteal hover:bg-teal-400 text-cyberbg px-5 py-2 rounded-full transition-all shadow-[0_0_10px_rgba(20,241,217,0.2)]">Sign Up</a>
+                        <a href="{{ url_for('auth.login') }}" class="text-sm font-medium text-gray-300 hover:text-white transition-colors duration-300">Login</a>
+                        <a href="{{ url_for('auth.register') }}" class="px-5 py-2 text-sm font-medium text-white rounded-full bg-gradient-to-r from-teal-500 to-violet-600 hover:from-teal-400 hover:to-violet-500 shadow-lg hover:shadow-teal-500/25 transition-all duration-300 hover:-translate-y-0.5">
+                            Sign Up
+                        </a>
                     {% endif %}
                 </div>
             </div>
@@ -61,25 +50,23 @@
     </nav>
 
     <!-- Flash Messages -->
-    <div class="max-w-4xl mx-auto px-4 mt-6">
+    <div class="max-w-7xl mx-auto px-4 mt-6 w-full z-40">
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                    {% set border_color = 'border-blue-500/50' %}
-                    {% set text_color = 'text-blue-400' %}
-                    {% if category == 'success' %}{% set border_color = 'border-cyberteal/50' %}{% set text_color = 'text-cyberteal' %}{% endif %}
-                    {% if category == 'danger' %}{% set border_color = 'border-red-500/50' %}{% set text_color = 'text-red-400' %}{% endif %}
-                    
-                    <div class="bg-cybercard border {{ border_color }} {{ text_color }} px-4 py-3 rounded-xl mb-4 flex items-center shadow-lg" role="alert">
-                        <span class="block sm:inline text-sm font-medium">{{ message }}</span>
+                    <div class="p-4 mb-4 rounded-xl backdrop-blur-md border shadow-lg transform transition-all duration-300 hover:scale-[1.01]
+                        {% if category == 'success' %} bg-teal-500/10 border-teal-500/30 text-teal-300
+                        {% elif category == 'danger' %} bg-red-500/10 border-red-500/30 text-red-300
+                        {% else %} bg-blue-500/10 border-blue-500/30 text-blue-300 {% endif %}">
+                        {{ message }}
                     </div>
                 {% endfor %}
             {% endif %}
         {% endwith %}
     </div>
 
-    <!-- Main Dynamic Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+    <!-- Main Content wrapped in Page Transition -->
+    <main class="flex-grow flex flex-col justify-center py-10 page-transition">
         {% block content %}{% endblock %}
     </main>
 

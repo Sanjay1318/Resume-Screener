@@ -1,50 +1,52 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="max-w-md mx-auto mt-20 fade-in relative">
-    
-    <!-- Subtle Background Glow -->
-    <div class="absolute -top-10 -left-10 w-48 h-48 bg-cyberteal rounded-full mix-blend-screen filter blur-[80px] opacity-10"></div>
+<div class="flex items-center justify-center min-h-[70vh] w-full px-4">
+    <!-- Dark Floating Card with Neon Glow -->
+    <div
+        class="w-full max-w-md p-8 space-y-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl shadow-[0_0_30px_rgba(45,212,191,0.1)] transition-all duration-500 hover:border-teal-500/30 hover:shadow-[0_0_40px_rgba(45,212,191,0.2)]">
 
-    <!-- The Cyber-Card -->
-    <div class="bg-cybercard border border-cyberborder p-10 rounded-3xl shadow-2xl relative z-10">
-        
-        <div class="text-center mb-8">
-            <h2 class="text-3xl font-extrabold text-white tracking-wide">Welcome Back</h2>
-            <p class="text-cybergray text-sm mt-2">Log in to view your scan history.</p>
+        <div class="text-center">
+            <h2
+                class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-violet-400">
+                Welcome Back
+            </h2>
+            <p class="mt-2 text-sm text-gray-400">Sign in to access your dashboard</p>
         </div>
 
-        <form action="{{ url_for('auth.login') }}" method="POST" class="space-y-6">
-            
-            <!-- Email Input -->
+        <form method="POST" action="{{ url_for('auth.login') }}" class="space-y-5 mt-8">
             <div>
-                <label for="email" class="block text-xs font-medium text-cybergray uppercase tracking-wider mb-2">Email Address</label>
-                <input type="email" name="email" id="email" required
-                       class="block w-full bg-cyberbg border border-cyberborder rounded-xl text-white shadow-sm focus:border-cyberteal focus:ring-1 focus:ring-cyberteal sm:text-sm p-3 transition-colors outline-none">
+                <label class="block text-sm font-medium text-gray-300 mb-1">Email Address</label>
+                <input type="email" name="email" required
+                    class="w-full px-4 py-3 bg-slate-900/50 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
+                    placeholder="Enter your email">
             </div>
 
-            <!-- Password Input -->
             <div>
-                <label for="password" class="block text-xs font-medium text-cybergray uppercase tracking-wider mb-2">Password</label>
-                <input type="password" name="password" id="password" required
-                       class="block w-full bg-cyberbg border border-cyberborder rounded-xl text-white shadow-sm focus:border-cyberteal focus:ring-1 focus:ring-cyberteal sm:text-sm p-3 transition-colors outline-none">
+                <div class="flex justify-between items-center mb-1">
+                    <label class="block text-sm font-medium text-gray-300">Password</label>
+                    <a href="{{ url_for('auth.forgot_password') }}"
+                        class="text-xs text-teal-400 hover:text-teal-300 transition-colors duration-300">Forgot
+                        password?</a>
+                </div>
+
+                <input type="password" name="password" required
+                    class="w-full px-4 py-3 bg-slate-900/50 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
+                    placeholder="Enter your password">
             </div>
 
-            <!-- Glowing Submit Button -->
-            <div class="pt-4">
-                <button type="submit" 
-                        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-full shadow-[0_0_15px_rgba(20,241,217,0.15)] text-sm font-bold text-cyberbg bg-cyberteal hover:bg-teal-400 focus:outline-none transition-all duration-300">
-                    Log In
-                </button>
-            </div>
+            <!-- Pill-Shaped Teal Button -->
+            <button type="submit"
+                class="w-full py-3.5 mt-4 font-bold text-white rounded-full bg-gradient-to-r from-teal-500 to-violet-600 hover:from-teal-400 hover:to-violet-500 shadow-lg hover:shadow-teal-500/25 transition-all duration-300 transform hover:-translate-y-0.5">
+                Sign In
+            </button>
         </form>
 
-        <div class="mt-8 text-center border-t border-cyberborder pt-6">
-            <p class="text-sm text-cybergray">
-                Don't have an account? 
-                <a href="{{ url_for('auth.register') }}" class="font-medium text-cyberteal hover:text-teal-400 transition-colors">Sign up.</a>
-            </p>
-        </div>
+        <p class="text-sm text-center text-gray-400 mt-6">
+            Don't have an account?
+            <a href="{{ url_for('auth.register') }}"
+                class="font-medium text-teal-400 hover:text-teal-300 transition-colors duration-300">Sign up</a>
+        </p>
     </div>
 </div>
 {% endblock %}

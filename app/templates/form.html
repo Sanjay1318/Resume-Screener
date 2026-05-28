@@ -1,13 +1,15 @@
 <div class="bg-cybercard p-10 rounded-3xl shadow-2xl border border-cyberborder fade-in">
     <h2 class="text-2xl font-bold text-white mb-6 tracking-wide">Configure AI Scan Parameters</h2>
-    
-    <form id="scan-form" action="{{ url_for('main.analyze') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
-        
+
+    <form id="scan-form" action="{{ url_for('main.analyze') }}" method="POST" enctype="multipart/form-data"
+        class="space-y-6">
+
         <!-- Job Title -->
         <div>
-            <label for="job_title" class="block text-xs font-medium text-cybergray uppercase tracking-wider mb-2">Job Classification Target <span class="text-cyberteal">*</span></label>
+            <label for="job_title" class="block text-xs font-medium text-cybergray uppercase tracking-wider mb-2">Job
+                Classification Target <span class="text-cyberteal">*</span></label>
             <input type="text" name="job_title" id="job_title" placeholder="e.g., Senior Python Developer" required
-                   class="block w-full bg-cyberbg border border-cyberborder rounded-xl text-white shadow-sm focus:border-cyberteal focus:ring-1 focus:ring-cyberteal sm:text-sm p-3 transition-colors outline-none placeholder-gray-600">
+                class="block w-full bg-cyberbg border border-cyberborder rounded-xl text-white shadow-sm focus:border-cyberteal focus:ring-1 focus:ring-cyberteal sm:text-sm p-3 transition-colors outline-none placeholder-gray-600">
         </div>
 
         <!-- Flexible Job Description Input -->
@@ -19,35 +21,51 @@
 
             <!-- Option A: Paste Text -->
             <div>
-                <label for="jd_text" class="block text-[10px] font-bold text-cybergray uppercase tracking-widest mb-1">Raw Text Input</label>
+                <label for="jd_text"
+                    class="block text-[10px] font-bold text-cybergray uppercase tracking-widest mb-1">Raw Text
+                    Input</label>
                 <textarea name="jd_text" id="jd_text" rows="4" placeholder="Paste the full job description here..."
-                          class="block w-full bg-black/20 border border-cyberborder rounded-xl text-white shadow-sm focus:border-cyberteal focus:ring-1 focus:ring-cyberteal sm:text-sm p-3 transition-colors outline-none placeholder-gray-700"></textarea>
+                    class="block w-full bg-black/20 border border-cyberborder rounded-xl text-white shadow-sm focus:border-cyberteal focus:ring-1 focus:ring-cyberteal sm:text-sm p-3 transition-colors outline-none placeholder-gray-700"></textarea>
             </div>
 
-            <div class="flex items-center text-xs text-cyberborder font-mono before:flex-1 before:border-t before:border-cyberborder before:mr-4 after:flex-1 after:border-t after:border-cyberborder after:ml-4">
+            <div
+                class="flex items-center text-xs text-cyberborder font-mono before:flex-1 before:border-t before:border-cyberborder before:mr-4 after:flex-1 after:border-t after:border-cyberborder after:ml-4">
                 OR
             </div>
 
             <!-- Option B: Upload File -->
             <div>
-                <label for="jd_file" class="block text-[10px] font-bold text-cybergray uppercase tracking-widest mb-1">Document Upload (.pdf, .txt)</label>
-                <input type="file" name="jd_file" id="jd_file" accept=".pdf,.txt"
-                       class="block w-full text-sm text-cybergray file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-cyberborder file:text-white hover:file:bg-cybergray/50 transition-all cursor-pointer">
+                <label for="jd_file"
+                    class="block text-[10px] font-bold text-cybergray uppercase tracking-widest mb-1">Document Upload
+                    (.pdf, .txt)</label>
+                <input type="file" name="jd_file" accept=".pdf,.txt" class="block w-full text-sm text-gray-400 
+              file:mr-4 file:py-2.5 file:px-6 file:rounded-full 
+              file:border file:border-teal-500/30 file:text-sm file:font-semibold 
+              file:bg-teal-500/10 file:text-teal-400 
+              hover:file:bg-teal-500/20 hover:file:border-teal-400/50 hover:file:text-teal-300 
+              transition-all duration-300 cursor-pointer">
             </div>
         </div>
 
         <!-- Resumes Upload -->
         <div>
-            <label class="block text-xs font-medium text-cybergray uppercase tracking-wider mb-2">Candidate Telemetry (Resumes) <span class="text-cyberteal">*</span></label>
-            <div class="mt-2 flex justify-center px-6 pt-8 pb-8 border-2 border-cyberborder border-dashed rounded-2xl hover:border-cyberteal transition-colors bg-cyberbg group">
+            <label class="block text-xs font-medium text-cybergray uppercase tracking-wider mb-2">Candidate Telemetry
+                (Resumes) <span class="text-cyberteal">*</span></label>
+            <div
+                class="mt-2 flex justify-center px-6 pt-8 pb-8 border-2 border-cyberborder border-dashed rounded-2xl hover:border-cyberteal transition-colors bg-cyberbg group">
                 <div class="space-y-2 text-center">
-                    <svg class="mx-auto h-12 w-12 text-cybergray group-hover:text-cyberteal transition-colors" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <svg class="mx-auto h-12 w-12 text-cybergray group-hover:text-cyberteal transition-colors"
+                        stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                        <path
+                            d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                     <div class="flex text-sm justify-center">
-                        <label for="resumes" class="relative cursor-pointer rounded-md font-bold text-cyberteal hover:text-teal-400 focus-within:outline-none p-1 transition-colors">
+                        <label for="resumes"
+                            class="relative cursor-pointer rounded-md font-bold text-cyberteal hover:text-teal-400 focus-within:outline-none p-1 transition-colors">
                             <span>Select files</span>
-                            <input id="resumes" name="resumes" type="file" class="sr-only" multiple required accept=".pdf,.txt" onchange="handleFileUpload(this)">
+                            <input id="resumes" name="resumes" type="file" class="sr-only" multiple required
+                                accept=".pdf,.txt" onchange="handleFileUpload(this)">
                         </label>
                     </div>
                     <p id="file-upload-text" class="text-xs text-cybergray font-mono">PDF or TXT (Max 30 items)</p>
@@ -57,8 +75,8 @@
 
         <!-- Submit Button -->
         <div class="pt-4">
-            <button type="submit" 
-                    class="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-full shadow-[0_0_15px_rgba(20,241,217,0.15)] text-sm font-bold text-cyberbg bg-cyberteal hover:bg-teal-400 focus:outline-none transition-all duration-300 uppercase tracking-widest">
+            <button type="submit"
+                class="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-full shadow-[0_0_15px_rgba(20,241,217,0.15)] text-sm font-bold text-cyberbg bg-cyberteal hover:bg-teal-400 focus:outline-none transition-all duration-300 uppercase tracking-widest">
                 Initialize Evaluation
             </button>
         </div>
@@ -68,28 +86,36 @@
 <!-- ========================================== -->
 <!-- THE CYBER-TEAL PROGRESS BAR OVERLAY        -->
 <!-- ========================================== -->
-<div id="loading-overlay" class="fixed inset-0 z-50 hidden bg-cyberbg/95 backdrop-blur-md flex-col items-center justify-center transition-opacity duration-300">
+<div id="loading-overlay"
+    class="fixed inset-0 z-50 hidden bg-cyberbg/95 backdrop-blur-md flex-col items-center justify-center transition-opacity duration-300">
     <div class="w-full max-w-2xl px-8 relative">
-        
+
         <div class="text-center mb-12">
             <h2 class="text-3xl font-extrabold text-white tracking-widest uppercase mb-3">Processing Telemetry</h2>
-            <p id="progress-text" class="text-cyberteal font-mono text-sm">Establishing connection to Gemini LLM Core...</p>
+            <p id="progress-text" class="text-cyberteal font-mono text-sm">Establishing connection to Gemini LLM Core...
+            </p>
         </div>
 
         <!-- The Progress Bar Track -->
         <div class="relative w-full h-1 bg-cyberborder rounded-full">
-            
+
             <!-- The Moving Cyber Icon -->
-            <div id="progress-icon" class="absolute -top-6 -ml-3 transition-all duration-500 ease-linear" style="left: 0%;">
-                <svg class="w-6 h-6 text-cyberteal animate-pulse" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"></path>
+            <div id="progress-icon" class="absolute -top-6 -ml-3 transition-all duration-500 ease-linear"
+                style="left: 0%;">
+                <svg class="w-6 h-6 text-cyberteal animate-pulse" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"
+                        clip-rule="evenodd"></path>
                 </svg>
             </div>
 
             <!-- The Filled Glowing Line -->
-            <div id="progress-fill" class="absolute top-0 left-0 h-full bg-cyberteal shadow-[0_0_10px_rgba(20,241,217,0.8)] rounded-full transition-all duration-500 ease-linear" style="width: 0%;"></div>
+            <div id="progress-fill"
+                class="absolute top-0 left-0 h-full bg-cyberteal shadow-[0_0_10px_rgba(20,241,217,0.8)] rounded-full transition-all duration-500 ease-linear"
+                style="width: 0%;"></div>
         </div>
-        
+
         <!-- Percentage Text -->
         <div class="text-right mt-4">
             <span id="percentage-text" class="text-white font-mono font-bold text-xl">0%</span>
@@ -98,55 +124,55 @@
 </div>
 
 <script>
-function handleFileUpload(input) {
-    const maxFiles = 30;
-    const textDisplay = document.getElementById('file-upload-text');
-    
-    if (input.files.length > maxFiles) {
-        alert(`Limit exceeded. You can only process up to ${maxFiles} items per scan.`);
-        input.value = ""; 
-        textDisplay.textContent = "PDF or TXT (Max 30 items)";
-        textDisplay.classList.replace('text-cyberteal', 'text-cybergray');
-    } else if (input.files.length > 0) {
-        textDisplay.textContent = `[ ${input.files.length} FILE(S) LOADED ]`;
-        textDisplay.classList.replace('text-cybergray', 'text-cyberteal');
-    } else {
-        textDisplay.textContent = "PDF or TXT (Max 30 items)";
-        textDisplay.classList.replace('text-cyberteal', 'text-cybergray');
-    }
-}
+    function handleFileUpload(input) {
+        const maxFiles = 30;
+        const textDisplay = document.getElementById('file-upload-text');
 
-document.getElementById('scan-form').addEventListener('submit', function() {
-    const overlay = document.getElementById('loading-overlay');
-    overlay.classList.remove('hidden');
-    overlay.classList.add('flex');
-
-    const fileInput = document.getElementById('resumes');
-    const fileCount = fileInput.files.length || 1;
-    const estimatedTotalSeconds = fileCount * 6; 
-    
-    let currentPercent = 0;
-    const fill = document.getElementById('progress-fill');
-    const icon = document.getElementById('progress-icon');
-    const percentText = document.getElementById('percentage-text');
-    const statusText = document.getElementById('progress-text');
-    
-    const interval = setInterval(() => {
-        if (currentPercent < 95) {
-            currentPercent += (100 / estimatedTotalSeconds);
-            if (currentPercent > 95) currentPercent = 95;
-            
-            const displayPercent = Math.round(currentPercent);
-            fill.style.width = displayPercent + '%';
-            icon.style.left = displayPercent + '%';
-            percentText.textContent = displayPercent + '%';
-            
-            if (displayPercent > 30 && displayPercent < 60) {
-                statusText.textContent = "Matching cross-reference skills against Job Description...";
-            } else if (displayPercent >= 60) {
-                statusText.textContent = "Generating AI summaries and interview logic...";
-            }
+        if (input.files.length > maxFiles) {
+            alert(`Limit exceeded. You can only process up to ${maxFiles} items per scan.`);
+            input.value = "";
+            textDisplay.textContent = "PDF or TXT (Max 30 items)";
+            textDisplay.classList.replace('text-cyberteal', 'text-cybergray');
+        } else if (input.files.length > 0) {
+            textDisplay.textContent = `[ ${input.files.length} FILE(S) LOADED ]`;
+            textDisplay.classList.replace('text-cybergray', 'text-cyberteal');
+        } else {
+            textDisplay.textContent = "PDF or TXT (Max 30 items)";
+            textDisplay.classList.replace('text-cyberteal', 'text-cybergray');
         }
-    }, 1000);
-});
+    }
+
+    document.getElementById('scan-form').addEventListener('submit', function () {
+        const overlay = document.getElementById('loading-overlay');
+        overlay.classList.remove('hidden');
+        overlay.classList.add('flex');
+
+        const fileInput = document.getElementById('resumes');
+        const fileCount = fileInput.files.length || 1;
+        const estimatedTotalSeconds = fileCount * 6;
+
+        let currentPercent = 0;
+        const fill = document.getElementById('progress-fill');
+        const icon = document.getElementById('progress-icon');
+        const percentText = document.getElementById('percentage-text');
+        const statusText = document.getElementById('progress-text');
+
+        const interval = setInterval(() => {
+            if (currentPercent < 95) {
+                currentPercent += (100 / estimatedTotalSeconds);
+                if (currentPercent > 95) currentPercent = 95;
+
+                const displayPercent = Math.round(currentPercent);
+                fill.style.width = displayPercent + '%';
+                icon.style.left = displayPercent + '%';
+                percentText.textContent = displayPercent + '%';
+
+                if (displayPercent > 30 && displayPercent < 60) {
+                    statusText.textContent = "Matching cross-reference skills against Job Description...";
+                } else if (displayPercent >= 60) {
+                    statusText.textContent = "Generating AI summaries and interview logic...";
+                }
+            }
+        }, 1000);
+    });
 </script>

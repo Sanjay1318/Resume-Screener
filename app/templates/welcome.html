@@ -1,42 +1,82 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="max-w-4xl mx-auto mt-10">
-    
-    {% if current_user.is_authenticated %}
-        <!-- Cyber-Teal Dashboard Header -->
-        <div class="mb-8 flex justify-between items-center bg-cybercard p-8 rounded-3xl shadow-2xl border border-cyberborder fade-in relative overflow-hidden">
-            <!-- Subtle Glow -->
-            <div class="absolute -right-10 -top-10 w-32 h-32 bg-cyberteal rounded-full mix-blend-screen filter blur-[70px] opacity-10"></div>
-            
-            <div class="relative z-10">
-                <h2 class="text-3xl font-extrabold text-white tracking-wide">Welcome back, {{ current_user.name }}!</h2>
-                <p class="text-sm text-cybergray mt-2 font-light">Initialize a new scan sequence or access your telemetry archives.</p>
-            </div>
-            
-            <a href="{{ url_for('main.history') }}" class="relative z-10 bg-transparent hover:bg-cyberteal/10 text-cyberteal border border-cyberteal/30 hover:border-cyberteal font-semibold py-2.5 px-6 rounded-full transition-all duration-300 text-sm tracking-wide shadow-[0_0_15px_rgba(20,241,217,0.05)]">
-                View Analytics
-            </a>
-        </div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
 
-        <!-- The Upload Form -->
-        {% include "form.html" %}
-        
-    {% else %}
-        <!-- Locked State for Logged-Out Users -->
-        <div class="bg-cybercard p-12 rounded-3xl shadow-2xl border border-cyberborder text-center fade-in mt-20 relative overflow-hidden">
-            <!-- Center Glow -->
-            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-48 bg-cyberteal rounded-full mix-blend-screen filter blur-[90px] opacity-10"></div>
+    {% if not current_user.is_authenticated %}
+        <!-- LOGGED OUT STATE: The Hero Gateway -->
+        <div class="flex flex-col items-center justify-center text-center py-20">
             
-            <svg class="mx-auto h-16 w-16 text-cyberteal mb-6 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-            </svg>
-            <h2 class="text-3xl font-extrabold text-white mb-3 tracking-wide relative z-10">System Locked</h2>
-            <p class="text-cybergray mb-8 max-w-md mx-auto relative z-10">Authentication is required to initialize the AI evaluation matrix and access candidate telemetry.</p>
-            <div class="flex justify-center space-x-4 relative z-10">
-                <a href="{{ url_for('auth.login') }}" class="bg-cyberteal hover:bg-teal-400 text-cyberbg font-bold py-3 px-8 rounded-full shadow-[0_0_15px_rgba(20,241,217,0.15)] transition-all">Log In</a>
-                <a href="{{ url_for('auth.register') }}" class="bg-transparent hover:bg-white/5 text-white font-bold py-3 px-8 rounded-full border border-cyberborder transition-all">Create Account</a>
+            <!-- Glowing Badge -->
+            <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm mb-8 transition-transform hover:scale-105 duration-300">
+                <span class="w-2 h-2 rounded-full bg-teal-400 animate-pulse"></span>
+                <span class="text-sm font-medium text-gray-300">AI-Powered Resume Analysis</span>
             </div>
+
+            <!-- Massive Gradient Typography -->
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
+                Hire Smarter with <br/>
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-teal-400 via-cyan-400 to-violet-500">
+                    Res Scanner
+                </span>
+            </h1>
+            
+            <p class="mt-4 max-w-2xl text-lg md:text-xl text-gray-400 mb-10 leading-relaxed">
+                Instantly parse, score, and categorize up to 30 resumes against your Job Description using advanced LLM technology.
+            </p>
+            
+            <!-- Highly Interactive Buttons -->
+            <div class="flex space-x-6">
+                <a href="{{ url_for('auth.register') }}" class="group relative px-8 py-4 bg-gradient-to-r from-teal-500 to-violet-600 rounded-full font-semibold text-white shadow-[0_0_20px_rgba(45,212,191,0.3)] transition-all duration-300 ease-out hover:scale-105 hover:-translate-y-1 hover:shadow-[0_10px_40px_-10px_rgba(45,212,191,0.7)] overflow-hidden">
+                    <span class="relative z-10">Get Started Free</span>
+                    <div class="absolute inset-0 h-full w-full bg-gradient-to-r from-teal-400 to-violet-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </a>
+                
+                <a href="{{ url_for('auth.login') }}" class="px-8 py-4 rounded-full font-semibold text-gray-300 bg-white/5 border border-white/10 backdrop-blur-md transition-all duration-300 ease-out hover:bg-white/10 hover:text-white hover:-translate-y-1 hover:border-white/20">
+                    Sign In
+                </a>
+            </div>
+        </div>
+    {% else %}
+        <!-- LOGGED IN STATE: The Command Center -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Left Column: User Welcome & Quick Stats -->
+            <div class="lg:col-span-4 space-y-6">
+                
+                <!-- Welcome Card with Hover Lift -->
+                <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(45,212,191,0.2)] hover:border-white/20">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-teal-500 to-violet-600 flex items-center justify-center mb-6 shadow-lg">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-3xl font-bold text-white mb-2">Welcome back,</h2>
+                    <p class="text-xl text-teal-400 font-medium mb-6">{{ current_user.email.split('@')[0] | title }}</p>
+                    
+                    <a href="{{ url_for('main.history') }}" class="w-full flex items-center justify-between px-6 py-4 bg-white/5 border border-white/10 rounded-2xl text-gray-300 font-medium transition-all duration-300 hover:bg-white/10 hover:text-teal-300 hover:border-teal-500/30 group">
+                        <span>View Scan History</span>
+                        <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                </div>
+
+                <!-- Info Card -->
+                <div class="bg-gradient-to-br from-violet-900/40 to-slate-900/40 backdrop-blur-xl border border-violet-500/20 rounded-3xl p-8 transition-all duration-500 hover:border-violet-500/40">
+                    <h3 class="text-lg font-semibold text-violet-300 mb-3 flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        System Ready
+                    </h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">
+                        The AI engine is currently optimized for Batch Processing. You can upload up to 30 candidate resumes per evaluation cycle.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right Column: The AI Scanner Form -->
+            <div class="lg:col-span-8 transition-all duration-700 ease-out transform translate-y-0 opacity-100">
+                {% include "form.html" %}
+            </div>
+            
         </div>
     {% endif %}
 </div>

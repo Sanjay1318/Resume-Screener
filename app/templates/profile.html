@@ -1,53 +1,49 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="max-w-2xl mx-auto mt-12 fade-in">
-    
-    <div class="mb-8">
-        <h1 class="text-3xl font-bold text-white mb-2">Account Settings</h1>
-        <p class="text-cybergray text-sm">Manage your security credentials and profile details.</p>
-    </div>
+<div class="flex items-center justify-center min-h-[70vh] w-full px-4 page-transition">
+    <div
+        class="w-full max-w-md p-8 space-y-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl shadow-[0_0_30px_rgba(45,212,191,0.1)] transition-all duration-500 hover:border-teal-500/30 hover:shadow-[0_0_40px_rgba(45,212,191,0.2)]">
 
-    <!-- The Cyber-Card Form -->
-    <div class="bg-cybercard border border-cyberborder p-8 rounded-3xl shadow-2xl relative overflow-hidden">
-        
-        <!-- Subtle Glow Effect from the image -->
-        <div class="absolute -top-24 -right-24 w-64 h-64 bg-cyberteal rounded-full mix-blend-screen filter blur-[80px] opacity-10"></div>
+        <div class="text-center">
+            <h2
+                class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-violet-400">
+                Account Settings
+            </h2>
+            <p class="mt-2 text-sm text-gray-400">Update your profile details and security.</p>
+        </div>
 
-        <form action="{{ url_for('main.profile') }}" method="POST" class="space-y-6 relative z-10">
-            
-            <!-- Read-Only Name -->
+        <form method="POST" action="{{ url_for('main.profile') }}" class="space-y-5 mt-8">
             <div>
-                <label class="block text-xs font-medium text-cybergray uppercase tracking-wider mb-2">Full Name</label>
-                <div class="px-4 py-3 bg-cyberbg border border-cyberborder rounded-xl text-gray-500 text-sm">
-                    {{ current_user.name }} <span class="ml-2 text-xs text-cyberborder">(Cannot be changed)</span>
-                </div>
+                <label class="block text-sm font-medium text-gray-300 mb-1">FULL NAME</label>
+                <input type="text" name="name" value="{{ current_user.name }}" required
+                    class="w-full px-4 py-3 bg-slate-900/50 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300">
             </div>
 
-            <!-- Email Update -->
             <div>
-                <label for="email" class="block text-xs font-medium text-cybergray uppercase tracking-wider mb-2">Email Address</label>
-                <input type="email" name="email" id="email" value="{{ current_user.email }}" required
-                       class="block w-full bg-cyberbg border border-cyberborder rounded-xl text-white shadow-sm focus:border-cyberteal focus:ring-1 focus:ring-cyberteal sm:text-sm p-3 transition-colors outline-none">
+                <label class="block text-sm font-medium text-gray-300 mb-1">CURRENT PASSWORD</label>
+                <input type="password" name="current_password"
+                    class="w-full px-4 py-3 bg-slate-900/50 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all"
+                    placeholder="Required if changing password">
             </div>
 
-            <hr class="border-cyberborder my-6">
-
-            <!-- Password Update -->
             <div>
-                <label for="new_password" class="block text-xs font-medium text-cybergray uppercase tracking-wider mb-2">New Password</label>
-                <input type="password" name="new_password" id="new_password" placeholder="Leave blank to keep current password"
-                       class="block w-full bg-cyberbg border border-cyberborder rounded-xl text-white shadow-sm focus:border-cyberteal focus:ring-1 focus:ring-cyberteal sm:text-sm p-3 transition-colors outline-none placeholder-gray-600">
-                <p class="mt-2 text-xs text-cybergray">Only fill this out if you wish to change your current password.</p>
+                <label class="block text-sm font-medium text-gray-300 mb-1">EMAIL ADDRESS</label>
+                <input type="email" name="email" value="{{ current_user.email }}" required
+                    class="w-full px-4 py-3 bg-slate-900/50 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300">
             </div>
 
-            <!-- Submit Button (Pill shaped like the image) -->
-            <div class="pt-4">
-                <button type="submit" 
-                        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-full shadow-[0_0_15px_rgba(20,241,217,0.15)] text-sm font-bold text-cyberbg bg-cyberteal hover:bg-teal-400 focus:outline-none transition-all duration-300">
-                    Save Changes
-                </button>
+            <div>
+                <label class="block text-sm font-medium text-gray-300 mb-1">NEW PASSWORD</label>
+                <input type="password" name="new_password"
+                    class="w-full px-4 py-3 bg-slate-900/50 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
+                    placeholder="Leave blank to keep current password">
             </div>
+
+            <button type="submit"
+                class="w-full py-3.5 mt-6 font-bold text-white rounded-full bg-gradient-to-r from-teal-500 to-violet-600 hover:from-teal-400 hover:to-violet-500 shadow-lg hover:shadow-teal-500/25 transition-all duration-300 transform hover:-translate-y-0.5">
+                Save Changes
+            </button>
         </form>
     </div>
 </div>

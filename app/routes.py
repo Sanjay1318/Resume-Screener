@@ -35,25 +35,48 @@ def read_jd_file(file):
 @login_required
 def profile():
     if request.method == "POST":
+        new_name = request.form.get("name").strip()
         new_email = request.form.get("email").strip()
+        
+        # New password fields
+        current_password = request.form.get("current_password")
         new_password = request.form.get("new_password")
         
-        # Update Email
+        updates_made = False
+
+        # 1. Update Name
+        if new_name and new_name != current_user.name:
+            current_user.name = new_name
+            updates_made = True
+            
+        # 2. Update Email
         if new_email and new_email != current_user.email:
-            existing = User.query.filter_by(email=new_email).first()
-            if existing:
-                flash("That email is already in use.", "danger")
+            existing_user = User.query.filter_by(email=new_email).first()
+            if existing_user:
+                flash("That email address is already in use.", "danger")
             else:
                 current_user.email = new_email
-                flash("Email updated successfully.", "success")
+                updates_made = True
                 
-        # Update Password
+        # 3. Secure Password Update Logic
         if new_password:
-            # Hash the new password before saving
+            if not current_password:
+                flash("You must enter your current password to set a new one.", "danger")
+                return redirect(url_for("main.profile"))
+                
+            # Verify the current password is correct
+            if not bcrypt.check_password_hash(current_user.password_hash, current_password):
+                flash("Incorrect current password.", "danger")
+                return redirect(url_for("main.profile"))
+                
+            # If it matches, hash and save the new password
             current_user.password_hash = bcrypt.generate_password_hash(new_password).decode('utf-8')
-            flash("Password updated successfully.", "success")
+            updates_made = True
             
-        db.session.commit()
+        if updates_made:
+            db.session.commit()
+            flash("Account settings updated successfully!", "success")
+            
         return redirect(url_for("main.profile"))
         
     return render_template("profile.html")
