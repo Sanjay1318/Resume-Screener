@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-md mx-auto mt-20 fade-in relative">
+    
+    <!-- Subtle Background Glow -->
+    <div class="absolute -top-10 -left-10 w-48 h-48 bg-cyberteal rounded-full mix-blend-screen filter blur-[80px] opacity-10"></div>
+
+    <!-- The Cyber-Card -->
+    <div class="bg-cybercard border border-cyberborder p-10 rounded-3xl shadow-2xl relative z-10">
+        
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-extrabold text-white tracking-wide">Welcome Back</h2>
+            <p class="text-cybergray text-sm mt-2">Log in to view your scan history.</p>
+        </div>
+
+        <form action="{{ url_for('auth.login') }}" method="POST" class="space-y-6">
+            
+            <!-- Email Input -->
+            <div>
+                <label for="email" class="block text-xs font-medium text-cybergray uppercase tracking-wider mb-2">Email Address</label>
+                <input type="email" name="email" id="email" required
+                       class="block w-full bg-cyberbg border border-cyberborder rounded-xl text-white shadow-sm focus:border-cyberteal focus:ring-1 focus:ring-cyberteal sm:text-sm p-3 transition-colors outline-none">
+            </div>
+
+            <!-- Password Input -->
+            <div>
+                <label for="password" class="block text-xs font-medium text-cybergray uppercase tracking-wider mb-2">Password</label>
+                <input type="password" name="password" id="password" required
+                       class="block w-full bg-cyberbg border border-cyberborder rounded-xl text-white shadow-sm focus:border-cyberteal focus:ring-1 focus:ring-cyberteal sm:text-sm p-3 transition-colors outline-none">
+            </div>
+
+            <!-- Glowing Submit Button -->
+            <div class="pt-4">
+                <button type="submit" 
+                        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-full shadow-[0_0_15px_rgba(20,241,217,0.15)] text-sm font-bold text-cyberbg bg-cyberteal hover:bg-teal-400 focus:outline-none transition-all duration-300">
+                    Log In
+                </button>
+            </div>
+        </form>
+
+        <div class="mt-8 text-center border-t border-cyberborder pt-6">
+            <p class="text-sm text-cybergray">
+                Don't have an account? 
+                <a href="{{ url_for('auth.register') }}" class="font-medium text-cyberteal hover:text-teal-400 transition-colors">Sign up.</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

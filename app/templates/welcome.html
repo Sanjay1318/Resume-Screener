@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto mt-10">
+    
+    {% if current_user.is_authenticated %}
+        <!-- Cyber-Teal Dashboard Header -->
+        <div class="mb-8 flex justify-between items-center bg-cybercard p-8 rounded-3xl shadow-2xl border border-cyberborder fade-in relative overflow-hidden">
+            <!-- Subtle Glow -->
+            <div class="absolute -right-10 -top-10 w-32 h-32 bg-cyberteal rounded-full mix-blend-screen filter blur-[70px] opacity-10"></div>
+            
+            <div class="relative z-10">
+                <h2 class="text-3xl font-extrabold text-white tracking-wide">Welcome back, {{ current_user.name }}!</h2>
+                <p class="text-sm text-cybergray mt-2 font-light">Initialize a new scan sequence or access your telemetry archives.</p>
+            </div>
+            
+            <a href="{{ url_for('main.history') }}" class="relative z-10 bg-transparent hover:bg-cyberteal/10 text-cyberteal border border-cyberteal/30 hover:border-cyberteal font-semibold py-2.5 px-6 rounded-full transition-all duration-300 text-sm tracking-wide shadow-[0_0_15px_rgba(20,241,217,0.05)]">
+                View Analytics
+            </a>
+        </div>
+
+        <!-- The Upload Form -->
+        {% include "form.html" %}
+        
+    {% else %}
+        <!-- Locked State for Logged-Out Users -->
+        <div class="bg-cybercard p-12 rounded-3xl shadow-2xl border border-cyberborder text-center fade-in mt-20 relative overflow-hidden">
+            <!-- Center Glow -->
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-48 bg-cyberteal rounded-full mix-blend-screen filter blur-[90px] opacity-10"></div>
+            
+            <svg class="mx-auto h-16 w-16 text-cyberteal mb-6 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+            </svg>
+            <h2 class="text-3xl font-extrabold text-white mb-3 tracking-wide relative z-10">System Locked</h2>
+            <p class="text-cybergray mb-8 max-w-md mx-auto relative z-10">Authentication is required to initialize the AI evaluation matrix and access candidate telemetry.</p>
+            <div class="flex justify-center space-x-4 relative z-10">
+                <a href="{{ url_for('auth.login') }}" class="bg-cyberteal hover:bg-teal-400 text-cyberbg font-bold py-3 px-8 rounded-full shadow-[0_0_15px_rgba(20,241,217,0.15)] transition-all">Log In</a>
+                <a href="{{ url_for('auth.register') }}" class="bg-transparent hover:bg-white/5 text-white font-bold py-3 px-8 rounded-full border border-cyberborder transition-all">Create Account</a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

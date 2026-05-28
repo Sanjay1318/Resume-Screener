@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto mt-8 space-y-10 fade-in">
+    
+    <!-- Dashboard Heading -->
+    <div class="flex justify-between items-center pb-4 border-b border-cyberborder">
+        <div>
+            <h1 class="text-3xl font-extrabold tracking-wide text-white">System Analytics</h1>
+            <p class="text-sm text-cybergray mt-1">Real-time operational overview of AI resume processing and candidate yield.</p>
+        </div>
+        <a href="{{ url_for('main.root') }}" class="bg-transparent hover:bg-cyberteal/10 text-cyberteal border border-cyberteal/30 hover:border-cyberteal font-semibold py-2.5 px-6 rounded-full transition-all duration-300 text-sm tracking-wide shadow-[0_0_15px_rgba(20,241,217,0.05)]">
+            + Execute New Scan
+        </a>
+    </div>
+
+    <!-- Analytics Section ("Top Staking Assets" Grid Style) -->
+    <div>
+        <h2 class="text-xs font-bold uppercase tracking-widest text-cybergray mb-4">Core Performance Metrics</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <!-- Card 1: Total Batches -->
+            <div class="bg-cybercard border border-cyberborder rounded-2xl p-6 relative overflow-hidden group shadow-2xl">
+                <div class="absolute -right-16 -bottom-16 w-44 h-44 bg-cyberteal rounded-full filter blur-[60px] opacity-5 group-hover:opacity-10 transition-opacity"></div>
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-sm font-semibold text-cybergray tracking-wide">Total Batches Run</span>
+                    <span class="text-[10px] bg-cyberteal/10 text-cyberteal px-2 py-0.5 rounded-full border border-cyberteal/20 font-mono font-bold">LIVE_TRACK</span>
+                </div>
+                <div class="text-4xl font-extrabold text-white tracking-tight mb-2">
+                    {{ analytics['total_scans'] }} <span class="text-sm font-medium text-cybergray">Batches</span>
+                </div>
+                <!-- Mini decorative pulse timeline path to match the line charts in image_ba350d.png -->
+                <div class="w-full h-8 mt-4 overflow-hidden opacity-40">
+                    <svg viewBox="0 0 100 20" class="w-full h-full stroke-cyberteal fill-none stroke-2">
+                        <path d="M0 15 Q 15 5, 30 12 T 60 5 T 90 10 T 100 2" stroke-linecap="round"></path>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Card 2: Total Resumes -->
+            <div class="bg-cybercard border border-cyberborder rounded-2xl p-6 relative overflow-hidden group shadow-2xl">
+                <div class="absolute -right-16 -bottom-16 w-44 h-44 bg-purple-500 rounded-full filter blur-[60px] opacity-5 group-hover:opacity-10 transition-opacity"></div>
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-sm font-semibold text-cybergray tracking-wide">Total Resumes Processed</span>
+                    <span class="text-[10px] bg-purple-500/10 text-purple-400 px-2 py-0.5 rounded-full border border-purple-500/20 font-mono font-bold">TOTAL_VOLUME</span>
+                </div>
+                <div class="text-4xl font-extrabold text-white tracking-tight mb-2">
+                    {{ analytics['total_resumes'] }} <span class="text-sm font-medium text-cybergray">Profiles</span>
+                </div>
+                <!-- Decorative pulse path matching card 2 in image_ba350d.png -->
+                <div class="w-full h-8 mt-4 overflow-hidden opacity-40">
+                    <svg viewBox="0 0 100 20" class="w-full h-full stroke-purple-400 fill-none stroke-2">
+                        <path d="M0 5 Q 20 18, 40 8 T 70 15 T 100 5" stroke-linecap="round"></path>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Card 3: Quality Yield -->
+            <div class="bg-cybercard border border-cyberborder rounded-2xl p-6 relative overflow-hidden group shadow-2xl">
+                <div class="absolute -right-16 -bottom-16 w-44 h-44 bg-emerald-500 rounded-full filter blur-[60px] opacity-5 group-hover:opacity-10 transition-opacity"></div>
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-sm font-semibold text-cybergray tracking-wide">Priority Hires Identified</span>
+                    <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/20 font-mono font-bold">HIGH_MATCH</span>
+                </div>
+                <div class="text-4xl font-extrabold text-emerald-400 tracking-tight mb-2">
+                    {{ analytics['total_priority'] }} <span class="text-sm font-medium text-cybergray">Candidates</span>
+                </div>
+                <div class="w-full h-8 mt-4 overflow-hidden opacity-40">
+                    <svg viewBox="0 0 100 20" class="w-full h-full stroke-emerald-400 fill-none stroke-2">
+                        <path d="M0 18 L 20 12 L 40 15 L 60 4 L 80 8 L 100 2" stroke-linecap="round"></path>
+                    </svg>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- History Log Section ("Trade History" Table Style) -->
+    <div class="bg-cybercard border border-cyberborder rounded-2xl shadow-2xl overflow-hidden">
+        <div class="p-6 border-b border-cyberborder flex justify-between items-center bg-black/10">
+            <div>
+                <h3 class="text-lg font-bold text-white tracking-wide">Historical Processing Logs</h3>
+                <p class="text-xs text-cybergray mt-0.5">Comprehensive list of past AI model evaluation batches.</p>
+            </div>
+            <span class="text-xs font-mono bg-cyberborder px-3 py-1 rounded-full text-gray-300 border border-white/5">
+                RECORD_COUNT: {{ scans|length }}
+            </span>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="border-b border-cyberborder bg-black/5 text-[11px] uppercase tracking-widest text-cybergray font-bold">
+                        <th class="py-4 px-6">Timestamp</th>
+                        <th class="py-4 px-6">Job Classification Target</th>
+                        <th class="py-4 px-6 text-center">Volume</th>
+                        <th class="py-4 px-6 text-center">Priority</th>
+                        <th class="py-4 px-6 text-center">Shortlisted</th>
+                        <th class="py-4 px-6 text-center">Rejected</th>
+                        <th class="py-4 px-6 text-right">Operational Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-cyberborder/50 text-sm text-gray-300">
+                    {% for scan in scans %}
+                    <tr class="hover:bg-white/[0.02] transition-colors group">
+                        <!-- Date -->
+                        <td class="py-4 px-6 font-mono text-xs text-cybergray whitespace-nowrap">
+                            {{ scan.created_at.strftime('%Y-%m-%d %H:%M') }}
+                        </td>
+                        <!-- Job Title -->
+                        <td class="py-4 px-6 font-semibold text-white whitespace-nowrap group-hover:text-cyberteal transition-colors">
+                            {{ scan.job_title }}
+                        </td>
+                        <!-- Total -->
+                        <td class="py-4 px-6 text-center font-bold text-gray-400">
+                            {{ scan.total_resumes }}
+                        </td>
+                        <!-- Priority Pill -->
+                        <td class="py-4 px-6 text-center whitespace-nowrap">
+                            <span class="inline-block px-2.5 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-md font-mono text-xs font-bold min-w-[32px]">
+                                {{ scan.priority_count }}
+                            </span>
+                        </td>
+                        <!-- Shortlist Pill -->
+                        <td class="py-4 px-6 text-center whitespace-nowrap">
+                            <span class="inline-block px-2.5 py-0.5 bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 rounded-md font-mono text-xs font-bold min-w-[32px]">
+                                {{ scan.shortlisted_count }}
+                            </span>
+                        </td>
+                        <!-- Reject Pill -->
+                        <td class="py-4 px-6 text-center whitespace-nowrap">
+                            <span class="inline-block px-2.5 py-0.5 bg-red-500/10 text-red-400 border border-red-500/20 rounded-md font-mono text-xs font-bold min-w-[32px]">
+                                {{ scan.rejected_count }}
+                            </span>
+                        </td>
+                        <!-- Action Forms/Links -->
+                        <td class="py-4 px-6 text-right whitespace-nowrap">
+                            <div class="inline-flex items-center space-x-3">
+                                <a href="{{ url_for('main.view_scan', scan_id=scan.id) }}" class="text-xs font-bold tracking-wide text-cyberteal hover:text-white transition-colors bg-cyberteal/10 hover:bg-cyberteal px-3 py-1.5 rounded-full border border-cyberteal/20 hover:border-transparent">
+                                    View Output
+                                </a>
+                                <form action="{{ url_for('main.delete_scan', scan_id=scan.id) }}" method="POST" class="inline" onsubmit="return confirm('Purge selected scan matrix permanently? This operation cannot be undone.');">
+                                    <button type="submit" class="text-xs font-bold tracking-wide text-red-400 hover:text-white hover:bg-red-500/20 px-3 py-1.5 rounded-full border border-red-500/20 transition-all outline-none">
+                                        Purge
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="7" class="text-center py-12 text-sm text-cybergray italic bg-black/5">
+                            No telemetry history found. Initiate an processing stream to populate dashboard matrices.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

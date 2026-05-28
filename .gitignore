@@ -1,0 +1,13 @@
+# Ignore all environment files
+*.env
+
+# Ignore Virtual Environments
+venv/
+env/
+
+# Ignore Python Cache
+__pycache__/
+*.pyc
+
+# Ignore Uploaded Resumes
+resume_uploads/
