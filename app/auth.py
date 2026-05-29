@@ -65,13 +65,36 @@ def login():
                 )
                 # HTML formatting for a premium email presentation
                 msg.html = f"""
-                <div style="font-family: sans-serif; padding: 20px; background-color: #0f172a; color: #f8fafc; border-radius: 12px; max-width: 500px;">
-                    <h2 style="color: #2dd4bf; margin-bottom: 10px;">Res Scanner ⚡</h2>
-                    <p style="color: #94a3b8;">Use the security token below to finish signing into your recruiter workstation:</p>
-                    <div style="background-color: #1e293b; padding: 15px; text-align: center; font-size: 28px; font-weight: bold; letter-spacing: 4px; color: #14f1d9; border-radius: 8px; margin: 20px 0;">
-                        {otp}
+                <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 500px; margin: 0 auto; background-color: #0f172a; border-radius: 16px; overflow: hidden; border: 1px solid #1e293b; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);">
+                    
+                    <div style="background: linear-gradient(135deg, #0d9488 0%, #7c3aed 100%); padding: 25px 20px; text-align: center;">
+                        <h1 style="color: #ffffff; margin: 0; font-size: 26px; font-weight: 800; letter-spacing: 1px;">Res Scanner ⚡</h1>
                     </div>
-                    <p style="font-size: 12px; color: #64748b;">This request was generated on your behalf. Token expires in 5 minutes.</p>
+                    
+                    <div style="padding: 40px 30px; text-align: center;">
+                        <h2 style="color: #f8fafc; margin-top: 0; font-size: 20px; font-weight: 600;">Security Verification</h2>
+                        <p style="color: #94a3b8; font-size: 15px; line-height: 1.6; margin-bottom: 35px;">
+                            You recently initiated an authorization request. Please use the security token below to proceed:
+                        </p>
+                        
+                        <div style="margin: 30px 0;">
+                            <span style="font-size: 32px; font-weight: 800; letter-spacing: 8px; color: #2dd4bf; background-color: #020617; padding: 15px 35px; border-radius: 50px; border: 1px solid rgba(45, 212, 191, 0.2); display: inline-block;">
+                                {otp}
+                            </span>
+                        </div>
+                        
+                        <p style="color: #64748b; font-size: 13px; margin-top: 35px;">
+                            This token will securely expire in <strong>5 minutes</strong>. If you did not request this, please secure your account.
+                        </p>
+                    </div>
+                    
+                    <div style="background-color: #020617; padding: 20px; text-align: center; border-top: 1px solid #1e293b;">
+                        <p style="color: #475569; font-size: 11px; margin: 0; line-height: 1.5;">
+                            © 2024 Res Scanner Inc. All rights reserved.<br><br>
+                            <strong style="color: #64748b;">Please do not reply to this email.</strong><br>
+                            This inbox is not monitored and replies will be permanently ignored.
+                        </p>
+                    </div>
                 </div>
                 """
                 mail.send(msg)
@@ -147,13 +170,36 @@ def forgot_password():
             try:
                 msg = Message(subject="Password Reset Request", recipients=[user.email])
                 msg.html = f"""
-                <div style="font-family: sans-serif; padding: 20px; background-color: #0f172a; color: #f8fafc; border-radius: 12px; max-width: 500px;">
-                    <h2 style="color: #2dd4bf; margin-bottom: 10px;">Password Reset</h2>
-                    <p style="color: #94a3b8;">Use this 6-digit code to reset your password:</p>
-                    <div style="background-color: #1e293b; padding: 15px; text-align: center; font-size: 28px; font-weight: bold; letter-spacing: 4px; color: #14f1d9; border-radius: 8px; margin: 20px 0;">
-                        {otp}
+                <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 500px; margin: 0 auto; background-color: #0f172a; border-radius: 16px; overflow: hidden; border: 1px solid #1e293b; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);">
+                    
+                    <div style="background: linear-gradient(135deg, #0d9488 0%, #7c3aed 100%); padding: 25px 20px; text-align: center;">
+                        <h1 style="color: #ffffff; margin: 0; font-size: 26px; font-weight: 800; letter-spacing: 1px;">Res Scanner ⚡</h1>
                     </div>
-                    <p style="font-size: 12px; color: #64748b;">Code expires in 10 minutes.</p>
+                    
+                    <div style="padding: 40px 30px; text-align: center;">
+                        <h2 style="color: #f8fafc; margin-top: 0; font-size: 20px; font-weight: 600;">Security Verification</h2>
+                        <p style="color: #94a3b8; font-size: 15px; line-height: 1.6; margin-bottom: 35px;">
+                            You recently initiated an authorization request. Please use the security token below to proceed:
+                        </p>
+                        
+                        <div style="margin: 30px 0;">
+                            <span style="font-size: 32px; font-weight: 800; letter-spacing: 8px; color: #2dd4bf; background-color: #020617; padding: 15px 35px; border-radius: 50px; border: 1px solid rgba(45, 212, 191, 0.2); display: inline-block;">
+                                {otp}
+                            </span>
+                        </div>
+                        
+                        <p style="color: #64748b; font-size: 13px; margin-top: 35px;">
+                            This token will securely expire in <strong>5 minutes</strong>. If you did not request this, please secure your account.
+                        </p>
+                    </div>
+                    
+                    <div style="background-color: #020617; padding: 20px; text-align: center; border-top: 1px solid #1e293b;">
+                        <p style="color: #475569; font-size: 11px; margin: 0; line-height: 1.5;">
+                            © 2024 Res Scanner Inc. All rights reserved.<br><br>
+                            <strong style="color: #64748b;">Please do not reply to this email.</strong><br>
+                            This inbox is not monitored and replies will be permanently ignored.
+                        </p>
+                    </div>
                 </div>
                 """
                 mail.send(msg)
