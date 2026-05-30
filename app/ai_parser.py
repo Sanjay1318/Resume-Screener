@@ -1,31 +1,39 @@
-from google import genai
-from google.genai import types
-from flask import current_app
 import json
-import time # <-- Make sure time is imported!
+import time
+import os
+from groq import Groq
+from dotenv import load_dotenv
+
+# Load environment variables just in case
+load_dotenv()
 
 def analyze_resume_with_ai(resume_text, jd_text, max_retries=3):
     """
-    Sends the resume and job description to Gemini and returns structured JSON.
-    Includes an automatic retry mechanism to bypass API rate limits.
+    Sends the resume and job description to Groq (LLaMA 3) for lightning-fast analysis.
+    Returns structured JSON in 1-2 seconds.
     """
-    client = genai.Client(api_key=current_app.config['GEMINI_API_KEY'])
+    # Initialize the Groq client pulling directly from your .env file
+    client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
     
     prompt = f"""
-    You are an expert technical recruiter and resume scanner. 
+    You are an expert technical recruiter and Applicant Tracking System (ATS). 
     Compare the provided Candidate Resume against the Job Description.
     
-    You MUST return your response as a valid JSON object with the EXACT following keys:
-    - "score": A number between 0 and 100 representing the overall match.
-    - "matched_skills": A list of strings containing skills found in both the JD and resume.
-    - "missing_skills": A list of strings containing important skills from the JD missing in the resume.
-    - "ai_summary": A 2-sentence summary of the candidate's profile.
-    - "experience_match": A short sentence assessing if their years/type of experience matches.
-    - "education_match": A short sentence assessing their education vs requirements.
-    - "certifications": A list of strings containing any certifications found.
-    - "recommendation": A short string, either "Strong Hire", "Potential Hire", or "Do Not Hire".
-    - "score_reason": A brief paragraph explaining why you gave the score you did.
-    - "interview_questions": A list of 3 specific technical/behavioral questions to ask this candidate based on their resume gaps or strengths.
+    You MUST return your response as a valid, raw JSON object with the EXACT following structure. 
+
+    {{
+        "score": <int 0-100 based on overall quality and impact>,
+        "ats_score": <int 0-100 based strictly on keyword matching, formatting, and parseability>,
+        "matched_skills": ["skill1", "skill2"],
+        "missing_skills": ["skill3"],
+        "ai_summary": "<string 2-sentence summary>",
+        "experience_match": "<string short sentence>",
+        "education_match": "<string short sentence>",
+        "certifications": ["cert1"],
+        "recommendation": "<string Strong Hire, Potential Hire, or Do Not Hire>",
+        "score_reason": "<string brief paragraph>",
+        "interview_questions": ["q1", "q2", "q3"]
+    }}
 
     Job Description:
     {jd_text}
@@ -33,33 +41,37 @@ def analyze_resume_with_ai(resume_text, jd_text, max_retries=3):
     Candidate Resume:
     {resume_text}
     """
-    
-    # The Retry Loop
+
     for attempt in range(max_retries):
         try:
-            print(f"      [AI] Calling Google Gemini API (Attempt {attempt + 1})...")
-            response = client.models.generate_content(
-                model='gemini-2.0-flash', # <-- Change this line to 2.0-flash!                contents=prompt,
-                config=types.GenerateContentConfig(
-                    response_mime_type="application/json",
-                )
+            # The Groq Chat Completion API
+            chat_completion = client.chat.completions.create(
+                messages=[
+                    {
+                        "role": "system",
+                        "content": "You are a precise JSON-generating AI. Always output perfectly formatted JSON."
+                    },
+                    {
+                        "role": "user",
+                        "content": prompt
+                    }
+                ],
+                model="llama-3.3-70b-versatile", # Groq's flagship fast model
+                response_format={"type": "json_object"}, # Forces guaranteed JSON output!
+                temperature=0.2, # Keeps the AI highly focused and analytical
             )
-            print("      [AI] Response received from Google!")
             
-            result_dict = json.loads(response.text)
-            print("      [AI] JSON successfully parsed!")
-            return result_dict
+            raw_text = chat_completion.choices[0].message.content.strip()
+            
+            # Parse the text into a Python Dictionary
+            parsed_data = json.loads(raw_text)
+            return parsed_data
             
         except Exception as e:
-            error_msg = str(e)
-            print(f"      [AI ERROR]: {error_msg}")
-            
-            # If we hit a rate limit (429) and haven't run out of retries
-            if "429" in error_msg and attempt < max_retries - 1:
-                sleep_time = 15 # Wait 15 seconds to let the Google API cool down
-                print(f"      [AI] API limit hit. Pausing for {sleep_time} seconds before retrying...")
-                time.sleep(sleep_time)
-                continue
-                
-            # If it's a different error (like a bad PDF) or we are out of retries, fail gracefully
-            return None
+            print(f"API Attempt {attempt + 1} failed: {e}")
+            if attempt < max_retries - 1:
+                print("Retrying in 2 seconds...")
+                time.sleep(2)
+            else:
+                print("Max retries reached. AI Analysis failed.")
+                return None

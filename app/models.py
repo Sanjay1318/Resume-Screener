@@ -67,6 +67,7 @@ class Resume(db.Model):
     score = db.Column(db.Numeric(5, 2), nullable=False)
     matched_count = db.Column(db.Integer, nullable=False)
     total_count = db.Column(db.Integer, nullable=False)
+    ats_score = db.Column(db.Integer, nullable=True)
     
     # --- Advanced AI Features (JSON & Text Fields) ---
     matched_skills = db.Column(db.JSON, nullable=True)

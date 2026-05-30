@@ -188,6 +188,8 @@ def analyze():
         if ai_data:
             print(" -> SUCCESS: AI returned JSON data!")
             score = ai_data.get('score', 0)
+            ats_score = ai_data.get('ats_score', 0)  # <-- Pull the new ATS Score
+            
             if score > 85:
                 bucket = "Priority"
                 new_scan.priority_count += 1
@@ -209,6 +211,7 @@ def analyze():
                 stored_path=temp_path,
                 bucket=bucket,
                 score=score,
+                ats_score=ats_score,  # <-- Save it to the database!
                 matched_count=len(matched_skills),
                 total_count=len(matched_skills) + len(ai_data.get('missing_skills', [])),
                 matched_skills=matched_skills,
@@ -227,8 +230,8 @@ def analyze():
             print(" -> FAILED: AI did not return data.")
             flash(f"Failed to analyze {filename} with AI.", "danger")
             
-        print(" -> Pausing for 5 seconds to respect API limits...")
-        time.sleep(5) 
+        # print(" -> Pausing for 5 seconds to respect API limits...")
+        # time.sleep(15) 
     
     db.session.commit()
     

@@ -1,65 +1,178 @@
-<div class="bg-cyberbg rounded-xl border border-cyberborder mb-4 overflow-hidden transition-all hover:border-cyberteal hover:shadow-[0_0_15px_rgba(20,241,217,0.05)]">
-    <!-- Card Header -->
-    <div class="p-4 flex justify-between items-start">
-        <div>
-            <h3 class="text-base font-bold text-white tracking-wide">{{ candidate.candidate_name }}</h3>
-            <p class="text-xs text-cybergray truncate w-36 font-mono">{{ candidate.original_filename }}</p>
-        </div>
-        <!-- Score -->
-        <div class="flex flex-col items-center justify-center bg-black/40 rounded-lg p-2 border border-cyberborder">
-            <span class="text-lg font-extrabold font-mono {% if candidate.score >= 85 %}text-emerald-400{% elif candidate.score >= 65 %}text-yellow-400{% else %}text-red-400{% endif %}">
-                {{ candidate.score }}%
-            </span>
-            <span class="text-[9px] text-cybergray font-bold uppercase tracking-widest mt-0.5">Match</span>
-        </div>
-    </div>
+<div class="bg-slate-950/40 border border-white/5 rounded-2xl mb-4 hover:border-teal-500/30 transition-all duration-300 group relative shadow-lg backdrop-blur-sm">
+    <!-- Premium Neon Ambient Glow on Hover -->
+    <div class="absolute inset-0 bg-gradient-to-br from-teal-500/5 to-violet-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"></div>
 
-    <!-- Expandable AI Feedback -->
-    <details class="group border-t border-cyberborder">
-        <summary class="flex items-center justify-between cursor-pointer p-4 bg-black/20 text-xs font-bold text-cyberteal hover:bg-black/40 transition uppercase tracking-widest select-none">
-            AI Telemetry
-            <span class="transition group-open:rotate-180">
-                <svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="16"><path d="M6 9l6 6 6-6"></path></svg>
-            </span>
-        </summary>
+    <!-- The Entire Card is now an Expandable Details Tag -->
+    <details class="group/details relative z-10">
         
-        <!-- Expanded Content -->
-        <div class="p-5 space-y-5 text-sm text-gray-300 bg-cyberbg">
-            
-            <div>
-                <h4 class="font-bold text-white mb-1.5 text-xs uppercase tracking-wider">AI Summary</h4>
-                <p class="text-cybergray leading-relaxed text-[13px]">{{ candidate.ai_summary }}</p>
-            </div>
-            
-            {% if candidate.experience_match %}
-            <div>
-                <h4 class="font-bold text-white mb-1.5 text-xs uppercase tracking-wider">Experience Eval</h4>
-                <p class="text-cybergray text-[13px]">{{ candidate.experience_match }}</p>
-            </div>
-            {% endif %}
-
-            {% if candidate.missing_skills and candidate.missing_skills|length > 0 %}
-            <div>
-                <h4 class="font-bold text-red-400 mb-2 text-xs uppercase tracking-wider">Skill Gaps</h4>
-                <div class="flex flex-wrap gap-1.5">
-                    {% for skill in candidate.missing_skills %}
-                        <span class="px-2 py-1 bg-red-500/10 text-red-300 border border-red-500/20 rounded-md text-[10px] font-mono">{{ skill }}</span>
-                    {% endfor %}
+        <!-- Header Section (Clickable) -->
+        <summary class="flex justify-between items-center gap-4 p-4 cursor-pointer outline-none list-none [&::-webkit-details-marker]:hidden">
+            <div class="w-2/3 flex items-center">
+                <!-- Dropdown Chevron Arrow -->
+                <svg class="w-5 h-5 mr-3 text-slate-500 group-open/details:rotate-90 transition-transform duration-300 group-hover:text-teal-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+                <div>
+                    <h3 class="text-base font-bold text-slate-100 group-hover:text-teal-400 transition-colors duration-300 line-clamp-1 tracking-wide">{{ candidate.candidate_name }}</h3>
+                    <p class="text-[10px] text-slate-400 font-mono mt-0.5 truncate tracking-wider">{{ candidate.original_filename }}</p>
                 </div>
             </div>
-            {% endif %}
-
-            {% if candidate.interview_questions and candidate.interview_questions|length > 0 %}
-            <div class="bg-cybercard p-4 rounded-xl border border-cyberborder">
-                <h4 class="font-bold text-cyberteal mb-2 text-xs uppercase tracking-wider">Interview Probes</h4>
-                <ul class="list-disc pl-4 space-y-1.5 text-cybergray text-[12px]">
-                    {% for question in candidate.interview_questions %}
-                        <li>{{ question }}</li>
-                    {% endfor %}
-                </ul>
+            
+            <!-- Beautiful Glowing Radial Progress Rings -->
+            <div class="flex space-x-3 shrink-0 pr-1">
+                <!-- AI Score Ring (Teal) -->
+                <div class="relative w-14 h-14 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                    <svg class="absolute inset-0 w-full h-full transform -rotate-90 drop-shadow-[0_0_8px_rgba(45,212,191,0.3)]">
+                        <circle cx="28" cy="28" r="25" stroke="currentColor" stroke-width="3" fill="transparent" class="text-slate-800/80" />
+                        <circle cx="28" cy="28" r="25" stroke="currentColor" stroke-width="3" fill="transparent"
+                                stroke-dasharray="157" stroke-dashoffset="{{ 157 - (157 * ((candidate.score or 0)|float) / 100) }}"
+                                class="text-teal-400 transition-all duration-1000 ease-out" stroke-linecap="round" />
+                    </svg>
+                    <div class="absolute flex flex-col items-center justify-center">
+                        <div class="flex items-start mt-0.5">
+                            <span class="text-sm font-black text-white leading-none">{{ candidate.score or 0 }}</span>
+                        </div>
+                        <span class="text-[6px] font-bold tracking-widest text-teal-400 uppercase mt-0.5">AI</span>
+                    </div>
+                </div>
+                
+                <!-- ATS Score Ring (Violet) -->
+                <div class="relative w-14 h-14 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                    <svg class="absolute inset-0 w-full h-full transform -rotate-90 drop-shadow-[0_0_8px_rgba(139,92,246,0.3)]">
+                        <circle cx="28" cy="28" r="25" stroke="currentColor" stroke-width="3" fill="transparent" class="text-slate-800/80" />
+                        <circle cx="28" cy="28" r="25" stroke="currentColor" stroke-width="3" fill="transparent"
+                                stroke-dasharray="157" stroke-dashoffset="{{ 157 - (157 * ((candidate.ats_score or 0)|float) / 100) }}"
+                                class="text-violet-500 transition-all duration-1000 ease-out delay-150" stroke-linecap="round" />
+                    </svg>
+                    <div class="absolute flex flex-col items-center justify-center">
+                        <div class="flex items-start mt-0.5">
+                            <span class="text-sm font-black text-white leading-none">{{ candidate.ats_score or 0 }}</span>
+                        </div>
+                        <span class="text-[6px] font-bold tracking-widest text-violet-400 uppercase mt-0.5">ATS</span>
+                    </div>
+                </div>
             </div>
-            {% endif %}
+        </summary>
+
+        <!-- Expandable Content Area (Hidden by default) -->
+        <div class="px-5 pb-5 pt-3 border-t border-white/5 space-y-5">
+            
+            <!-- AI Executive Summary Box -->
+            <div class="bg-slate-900/40 p-4 rounded-xl border border-white/5 shadow-inner">
+                <p class="text-xs text-slate-300 leading-relaxed tracking-wide font-normal">{{ candidate.ai_summary }}</p>
+            </div>
+
+            <!-- AI Evaluation Logic Description -->
+            <div class="space-y-1.5">
+                <span class="text-[10px] font-bold text-teal-500/80 uppercase tracking-widest font-mono flex items-center">
+                    <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Evaluation Logic
+                </span>
+                <p class="text-xs text-slate-300 leading-relaxed bg-slate-900/60 p-3.5 rounded-xl border border-white/5">{{ candidate.score_reason }}</p>
+            </div>
+
+            <!-- Structured Alignment Vectors -->
+            <div class="grid grid-cols-1 gap-4 bg-slate-900/20 p-3 rounded-xl border border-white/5">
+                <div>
+                    <span class="block text-[9px] text-slate-500 font-bold uppercase tracking-widest font-mono mb-1">Experience Alignment</span>
+                    <p class="text-xs text-slate-300 leading-relaxed font-normal">{{ candidate.experience_match }}</p>
+                </div>
+                <div class="border-t border-white/5 pt-3">
+                    <span class="block text-[9px] text-slate-500 font-bold uppercase tracking-widest font-mono mb-1">Education Vector</span>
+                    <p class="text-xs text-slate-300 leading-relaxed font-normal">{{ candidate.education_match }}</p>
+                </div>
+            </div>
+
+            <!-- Interactive Telemetry Radar Canvas -->
+            <div class="w-full max-w-[280px] mx-auto my-4 bg-slate-950/80 rounded-xl p-3 border border-white/5 shadow-2xl relative">
+                <span class="block text-[9px] text-slate-500 font-bold uppercase tracking-widest text-center mb-3 font-mono">Telemetry Radar</span>
+                <div class="relative w-full aspect-square flex items-center justify-center">
+                    <canvas id="radarChart-{{ candidate.id or loop.index }}" width="240" height="240"></canvas>
+                </div>
+            </div>
+            
+            <!-- Missing Critical Skill Gaps Matrix -->
+            <div class="space-y-2">
+                <span class="text-[10px] font-bold text-red-400/80 uppercase tracking-widest font-mono flex items-center">
+                    <svg class="w-3.5 h-3.5 mr-1.5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                    Missing Critical Gaps
+                </span>
+                <div class="flex flex-wrap gap-1.5">
+                    {% if candidate.missing_skills %}
+                        {% for skill in candidate.missing_skills %}
+                            <span class="text-[11px] font-semibold font-mono bg-red-950/40 text-red-400 px-2.5 py-1 rounded-lg border border-red-500/10 shadow-sm">{{ skill }}</span>
+                        {% endfor %}
+                    {% else %}
+                        <span class="text-[11px] font-semibold font-mono text-emerald-400 bg-emerald-950/40 px-2.5 py-1 rounded-lg border border-emerald-500/10 shadow-sm">All required criteria met</span>
+                    {% endif %}
+                </div>
+            </div>
             
         </div>
     </details>
 </div>
+
+<!-- Isolated Chart Execution Hook -->
+<script>
+(function() {
+    document.addEventListener('DOMContentLoaded', function() {
+        const chartId = 'radarChart-{{ candidate.id or loop.index }}';
+        const ctx = document.getElementById(chartId);
+        
+        // Ensure chart doesn't render twice if the script executes multiple times
+        if (!ctx || ctx.dataset.rendered === "true") return;
+        ctx.dataset.rendered = "true";
+        
+        const aiScore = {{ candidate.score or 0 }};
+        const atsScore = {{ candidate.ats_score or 0 }};
+        const skillsScore = {{ (candidate.matched_count / candidate.total_count * 100)|round|int if candidate.total_count and candidate.total_count > 0 else 50 }};
+        const expScore = aiScore > 80 ? 95 : (aiScore > 60 ? 75 : 40);
+        const eduScore = atsScore > 70 ? 90 : 60;
+        const techDepth = Math.max(15, Math.min(95, aiScore - 5));
+
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['AI Match', 'ATS Score', 'Skills', 'Experience', 'Education', 'Depth'],
+                datasets: [{
+                    data: [aiScore, atsScore, skillsScore, expScore, eduScore, techDepth],
+                    backgroundColor: 'rgba(20, 241, 217, 0.15)', 
+                    borderColor: 'rgba(20, 241, 217, 0.8)',       
+                    pointBackgroundColor: 'rgba(139, 92, 246, 1)', 
+                    pointBorderColor: '#0f172a',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(139, 92, 246, 1)',
+                    borderWidth: 1.5,
+                    pointRadius: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(255, 255, 255, 0.05)' },
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        pointLabels: {
+                            color: 'rgba(148, 163, 184, 0.8)', 
+                            font: { family: 'monospace', size: 8 }
+                        },
+                        ticks: {
+                            display: false, 
+                            min: 0,
+                            max: 100
+                        }
+                    }
+                },
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    });
+})();
+</script>

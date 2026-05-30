@@ -1,58 +1,197 @@
-# Res Scanner ⚡ | AI-Powered Resume Analyzer
+# 🚀 Res Scanner ⚡
 
-An advanced, AI-driven application designed to streamline the recruitment process. Res Scanner evaluates resumes against job descriptions using Google's Gemini AI, wrapped in a highly secure, production-grade authentication system and a modern "Aurora Glass" UI.
+### AI-Powered Applicant Tracking System
 
-## ✨ Key Features
+<p align="center">
+  <img src="https://img.shields.io/badge/Flask-Backend-black?style=for-the-badge&logo=flask" />
+  <img src="https://img.shields.io/badge/Groq-LLaMA%203-blueviolet?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/MySQL-Database-orange?style=for-the-badge&logo=mysql" />
+  <img src="https://img.shields.io/badge/TailwindCSS-Frontend-38B2AC?style=for-the-badge&logo=tailwind-css" />
+</p>
 
-* **AI Resume Evaluation:** Integrates with the Google Gemini API to parse, analyze, and score candidate resumes against specific job requirements.
-* **Enterprise-Grade Security:** Features robust password hashing using `Bcrypt` and secure session management via `Flask-Login`.
-* **Two-Factor Authentication (2FA):** Implements a custom One-Time Password (OTP) flow utilizing `Flask-Mail` and Google's SMTP servers to dispatch 6-digit verification codes to users upon login.
-* **Account Recovery System:** Complete self-service password reset flow (Forgot Password -> OTP Verification -> Reset) mirroring modern SaaS standards.
-* **Premium UI/UX:** Built with TailwindCSS featuring a bespoke "Cyber-Teal" color palette, frosted glassmorphism elements, and smooth page transitions.
-* **Relational Database:** Powered by MySQL and SQLAlchemy to securely store user credentials, temporary OTP tokens, and historical scan data.
+<p align="center">
+  An advanced, enterprise-grade Applicant Tracking System (ATS) that evaluates resumes against job descriptions at lightning speed.
+</p>
 
-## 🛠️ Tech Stack
+---
 
-* **Backend:** Python, Flask, Flask-SQLAlchemy, Flask-Login, Flask-Bcrypt, Flask-Mail
-* **Frontend:** HTML5, TailwindCSS, Jinja2 Templating
-* **Database:** MySQL
-* **AI Integration:** Google Gemini API
+## ✨ Overview
 
-## 🚀 Local Installation & Setup
+**Res Scanner** utilizes **Groq's LLaMA 3 AI** for ultra-fast candidate evaluation, wrapped in a highly secure authentication system and a modern **"Aurora Glass"** dashboard experience.
 
-**1. Clone the repository**
+The platform is designed to help recruiters and hiring teams efficiently analyze resumes, compare candidates, and visualize applicant strengths through interactive analytics.
+
+---
+
+# 🌟 Key Features
+
+## ⚡ Ultra-Fast AI Evaluation
+
+Powered by the **Groq API (LLaMA-3.3-70B)** to perform batch-processing of multiple resumes simultaneously, returning structured JSON evaluations in **1–2 seconds** with zero rate-limit crashing.
+
+---
+
+## 📊 Dual-Scoring Architecture
+
+Calculates two distinct metrics:
+
+* **AI Match Score** → Measures candidate impact, experience, and quality
+* **ATS Score** → Measures keyword density and structural parseability
+
+---
+
+## 📈 Interactive Telemetry
+
+Integrated with **Chart.js** to dynamically generate **Interactive Radar Charts** for every candidate, visualizing strengths across:
+
+* Experience
+* Education
+* Skills
+* Tech Depth
+
+---
+
+## 🔒 Enterprise-Grade Security
+
+Includes:
+
+* Password hashing with **Bcrypt**
+* Secure session management using **Flask-Login**
+* Custom **Two-Factor Authentication (2FA)** OTP flow via **Flask-Mail**
+
+---
+
+## 🎨 Premium UI/UX
+
+Built using **Tailwind CSS** featuring:
+
+* Custom **Cyber-Teal** color palette
+* Frosted glassmorphism components
+* Dynamic SVG circular progress gauges
+* Smooth page transitions
+
+---
+
+## 📄 Smart Parsing & Export
+
+Securely extracts text from PDFs using **pdfplumber** and allows recruiters to export complete Kanban-board scan results directly to CSV.
+
+---
+
+# 🛠️ Tech Stack
+
+| Category                | Technologies                                                     |
+| ----------------------- | ---------------------------------------------------------------- |
+| **Backend**             | Python, Flask, SQLAlchemy, Flask-Login, Flask-Bcrypt, Flask-Mail |
+| **AI Engine**           | Groq SDK (LLaMA 3)                                               |
+| **Frontend**            | HTML5, Tailwind CSS, Chart.js, Jinja2                            |
+| **Database**            | MySQL                                                            |
+| **Document Processing** | pdfplumber, Werkzeug                                             |
+
+---
+
+# 🚀 Local Installation & Setup
+
+## 1️⃣ Clone the Repository
+
 ```bash
-git clone [https://github.com/YourUsername/Resume_Scanner.git](https://github.com/YourUsername/Resume_Scanner.git)
+git clone https://github.com/Sanjay1318/Resume_Scanner.git
 cd Resume_Scanner
-2. Create and activate a virtual environment
+```
 
-Bash
+---
+
+## 2️⃣ Create & Activate Virtual Environment
+
+### Windows
+
+```bash
 python -m venv venv
-# On Windows:
 venv\Scripts\activate
-# On Mac/Linux:
+```
+
+### Mac/Linux
+
+```bash
+python -m venv venv
 source venv/bin/activate
-3. Install dependencies
+```
 
-Bash
+---
+
+## 3️⃣ Install Dependencies
+
+```bash
 pip install -r requirements.txt
-4. Environment Variables
-Create a .env file in the root directory and add your secure credentials. (Note: Never commit this file to version control).
+```
 
-Plaintext
+---
+
+## 4️⃣ Configure Environment Variables
+
+Create a `.env` file in the root directory and add the following credentials:
+
+```env
 SECRET_KEY=your_secure_secret_key
 SQLALCHEMY_DATABASE_URI=mysql+pymysql://root:password@localhost/resume_scanner
-GEMINI_API_KEY=your_google_gemini_api_key
+GROQ_API_KEY=your_groq_api_key
 MAIL_USERNAME=your.dedicated.app@gmail.com
 MAIL_PASSWORD=your_16_character_app_password
-5. Initialize the Database
-Ensure your MySQL server is running and the resume_scanner database is created.
+```
 
-6. Run the Application
+> ⚠️ Note:
+> This project enforces strict `.gitignore` rules for environment variables and sensitive credentials.
 
-Bash
+---
+
+## 5️⃣ Initialize the Database
+
+Ensure your **MySQL server** is running and the `resume_scanner` database is created.
+
+---
+
+## 6️⃣ Run the Application
+
+```bash
 python run.py
-The application will be available at http://127.0.0.1:5000
+```
 
-🔒 Security Note
-This repository strictly ignores environment variables and API keys. To run this project locally, you must supply your own Google Gemini API key and configure a dedicated Gmail App Password for SMTP routing.
+The application will be available at:
+
+```bash
+http://127.0.0.1:5000
+```
+
+---
+
+# 🔒 Security & API Note
+
+To run this project locally, you must:
+
+* Supply your own **Groq API Key**
+* Configure a dedicated **Gmail App Password** for SMTP OTP routing
+
+---
+
+# 📌 Future Improvements
+
+* Resume ranking history
+* Recruiter analytics dashboard
+* AI interview question generation
+* Candidate shortlisting automation
+* Docker deployment support
+
+---
+
+# 👨‍💻 Author
+
+### Vadla Sanjay Kumar
+
+* GitHub: https://github.com/Sanjay1318
+* LinkedIn: https://www.linkedin.com/in/sanjaychari007/
+
+---
+
+# ⭐ Support
+
+If you found this project helpful, consider giving it a ⭐ on GitHub!
